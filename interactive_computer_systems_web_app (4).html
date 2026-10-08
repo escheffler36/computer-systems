@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Systems Work! - 4th Grade Computer Science</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0e7ff 100%);
+            color: #1e293b;
+            min-height: 100vh;
+        }
+        h1, h2, h3, .heading-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+        .chip {
+            transition: all 0.2s ease;
+        }
+        .chip:hover {
+            transform: scale(1.03);
+        }
+        .drop-zone {
+            transition: all 0.2s ease;
+        }
+        .tab-active {
+            background-color: #3b82f6 !important;
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body class="p-3 sm:p-6 md:p-8">
+
+<div class="max-w-4xl mx-auto space-y-6">
+    <!-- Header -->
+    <header class="bg-white rounded-3xl p-6 text-center card-shadow relative overflow-hidden border-4 border-blue-200">
+        <div class="inline-block bg-amber-100 text-amber-800 font-bold px-4 py-1.5 rounded-full text-xs sm:text-sm mb-2 border border-amber-300">
+            🌟 4th Grade Computer Science Explorer
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-600 tracking-wide">
+            How Systems Work! 🤖
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base mt-2 font-semibold">
+            Every computer system turns an <span class="text-emerald-600 font-bold">INPUT</span> into a useful <span class="text-purple-600 font-bold">OUTPUT</span> using a <span class="text-amber-600 font-bold">PROCESS</span>!
+        </p>
+
+        <!-- Progress Tracker Bar -->
+        <div class="mt-6 bg-slate-100 p-4 rounded-2xl border-2 border-slate-200">
+            <div class="flex justify-between items-center text-xs sm:text-sm font-bold text-slate-700 mb-2">
+                <span id="badge-count" class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full border border-blue-300">
+                    🏆 Badges Earned: 0 / 6
+                </span>
+                <span id="progress-percent" class="text-slate-500">0% Complete</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden p-0.5 border border-slate-300">
+                <div id="progress-bar" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-full rounded-full transition-all duration-500 w-0"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="flex flex-wrap gap-2 justify-center" id="activity-tabs">
+        <button onclick="switchTab(1)" class="tab-btn tab-active px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm bg-white text-slate-700 border-2 border-slate-200 hover:border-blue-400 transition">1. Traffic Light 🚦</button>
+        <button onclick="switchTab(2)" class="tab-btn px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm bg-white text-slate-700 border-2 border-slate-200 hover:border-blue-400 transition">2. Vending Steps 🍿</button>
+        <button onclick="switchTab(3)" class="tab-btn px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm bg-white text-slate-700 border-2 border-slate-200 hover:border-blue-400 transition">3. System Doctor 🩺</button>
+        <button onclick="switchTab(4)" class="tab-btn px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm bg-white text-slate-700 border-2 border-slate-200 hover:border-blue-400 transition">4. Sort Parts 📦</button>
+        <button onclick="switchTab(5)" class="tab-btn px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm bg-white text-slate-700 border-2 border-slate-200 hover:border-blue-400 transition">5. Pet Feeder 🐾</button>
+        <button onclick="switchTab(6)" class="tab-btn px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm bg-white text-slate-700 border-2 border-slate-200 hover:border-blue-400 transition">6. Final Quiz 🎯</button>
+    </nav>
+
+    <!-- ACTIVITY 1 -->
+    <section id="act-1" class="activity-card bg-white rounded-3xl p-6 card-shadow border-4 border-blue-100 space-y-6">
+        <div class="border-b-2 border-slate-100 pb-4">
+            <span class="text-xs font-extrabold text-blue-500 uppercase tracking-wider">Activity 1 of 6</span>
+            <h2 class="text-2xl font-bold text-slate-800">The Pedestrian Traffic Light 🚦</h2>
+            <p class="text-sm text-slate-600 mt-1">
+                Choose the correct part for each step of the street crossing system!
+            </p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-4 text-center">
+            <!-- Input -->
+            <div class="bg-emerald-50 p-4 rounded-2xl border-2 border-emerald-200 space-y-2">
+                <div class="text-xs font-bold text-emerald-700 uppercase">1. INPUT (Information In)</div>
+                <select id="a1-in" class="w-full bg-white border-2 border-emerald-300 rounded-xl p-2.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500">
+                    <option value="">-- Choose Input --</option>
+                    <option value="light">Red "STOP" light glows</option>
+                    <option value="btn">Pedestrian presses crossing button</option>
+                    <option value="timer">Computer counts down 10 seconds</option>
+                </select>
+            </div>
+
+            <!-- Process -->
+            <div class="bg-amber-50 p-4 rounded-2xl border-2 border-amber-200 space-y-2">
+                <div class="text-xs font-bold text-amber-700 uppercase">2. PROCESS (System Working)</div>
+                <select id="a1-pr" class="w-full bg-white border-2 border-amber-300 rounded-xl p-2.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-amber-500">
+                    <option value="">-- Choose Process --</option>
+                    <option value="light">Red "STOP" light glows</option>
+                    <option value="btn">Pedestrian presses crossing button</option>
+                    <option value="timer">Circuit board counts down 10-second safety timer</option>
+                </select>
+            </div>
+
+            <!-- Output -->
+            <div class="bg-purple-50 p-4 rounded-2xl border-2 border-purple-200 space-y-2">
+                <div class="text-xs font-bold text-purple-700 uppercase">3. OUTPUT (The Result)</div>
+                <select id="a1-out" class="w-full bg-white border-2 border-purple-300 rounded-xl p-2.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-purple-500">
+                    <option value="">-- Choose Output --</option>
+                    <option value="light">Walk signal turns white & traffic light turns red</option>
+                    <option value="btn">Pedestrian presses crossing button</option>
+                    <option value="timer">Circuit board counts down 10-second safety timer</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex justify-end pt-2">
+            <button onclick="checkAct1()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-2xl text-sm transition shadow-lg shadow-blue-200">
+                Check Traffic System ✨
+            </button>
+        </div>
+        <div id="fb-1" class="hidden text-sm p-4 rounded-2xl font-bold"></div>
+    </section>
+
+    <!-- ACTIVITY 2 -->
+    <section id="act-2" class="activity-card bg-white rounded-3xl p-6 card-shadow border-4 border-blue-100 space-y-6 hidden">
+        <div class="border-b-2 border-slate-100 pb-4">
+            <span class="text-xs font-extrabold text-blue-500 uppercase tracking-wider">Activity 2 of 6</span>
+            <h2 class="text-2xl font-bold text-slate-800">Vending Machine Logic Steps 🍿</h2>
+            <p class="text-sm text-slate-600 mt-1">
+                Put these 4 steps in order (1 to 4) to show how a snack machine works!
+            </p>
+        </div>
+
+        <div class="space-y-3 max-w-xl mx-auto">
+            <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border-2 border-slate-200">
+                <select id="seq-step-a" class="bg-white border-2 border-slate-300 rounded-xl p-2 font-bold text-blue-600 text-sm">
+                    <option value="">?</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <span class="text-sm font-bold text-slate-700">You press button "B4" to pick popcorn.</span>
+            </div>
+
+            <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border-2 border-slate-200">
+                <select id="seq-step-b" class="bg-white border-2 border-slate-300 rounded-xl p-2 font-bold text-blue-600 text-sm">
+                    <option value="">?</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <span class="text-sm font-bold text-slate-700">You insert a $1 coin into the slot. (INPUT)</span>
+            </div>
+
+            <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border-2 border-slate-200">
+                <select id="seq-step-c" class="bg-white border-2 border-slate-300 rounded-xl p-2 font-bold text-blue-600 text-sm">
+                    <option value="">?</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <span class="text-sm font-bold text-slate-700">The popcorn drops into the bottom flap! (OUTPUT)</span>
+            </div>
+
+            <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border-2 border-slate-200">
+                <select id="seq-step-d" class="bg-white border-2 border-slate-300 rounded-xl p-2 font-bold text-blue-600 text-sm">
+                    <option value="">?</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <span class="text-sm font-bold text-slate-700">The computer checks if $1 is enough and turns the snack motor. (PROCESS)</span>
+            </div>
+        </div>
+
+        <div class="flex justify-end pt-2">
+            <button onclick="checkAct2()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-2xl text-sm transition shadow-lg shadow-blue-200">
+                Check Step Order 🍿
+            </button>
+        </div>
+        <div id="fb-2" class="hidden text-sm p-4 rounded-2xl font-bold"></div>
+    </section>
+
+    <!-- ACTIVITY 3 -->
+    <section id="act-3" class="activity-card bg-white rounded-3xl p-6 card-shadow border-4 border-blue-100 space-y-6 hidden">
+        <div class="border-b-2 border-slate-100 pb-4">
+            <span class="text-xs font-extrabold text-blue-500 uppercase tracking-wider">Activity 3 of 6</span>
+            <h2 class="text-2xl font-bold text-slate-800">System Doctor: Fix the Smart Light! 🩺</h2>
+            <p class="text-sm text-slate-600 mt-1">
+                The porch light won't turn on at night! Read the checkup notes and click the broken part of the system.
+            </p>
+        </div>
+
+        <!-- System diagram box -->
+        <div class="bg-slate-50 p-5 rounded-2xl border-2 border-slate-200 text-center space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm font-bold">
+                <div class="bg-emerald-100 p-3 rounded-xl border-2 border-emerald-300 text-emerald-800">
+                    <div>1. INPUT</div>
+                    <div class="text-slate-600 font-semibold text-xs mt-1">Darkness Sensor (Working ✅)</div>
+                </div>
+                <div class="bg-amber-100 p-3 rounded-xl border-2 border-amber-300 text-amber-800">
+                    <div>2. PROCESS</div>
+                    <div class="text-slate-600 font-semibold text-xs mt-1">Timer Processor Chip (Disconnected Wire ❌)</div>
+                </div>
+                <div class="bg-purple-100 p-3 rounded-xl border-2 border-purple-300 text-purple-800">
+                    <div>3. OUTPUT</div>
+                    <div class="text-slate-600 font-semibold text-xs mt-1">Light Bulb (Working Bulb ✅)</div>
+                </div>
+            </div>
+
+            <p class="text-sm text-slate-700 font-semibold pt-2">
+                Symptom: The sensor detects darkness, and the bulb is brand new, but the light stays off!
+            </p>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-slate-800 mb-3 text-center">Which part of the system is broken?</label>
+            <div class="grid sm:grid-cols-3 gap-3">
+                <button onclick="checkAct3('input')" class="bg-slate-100 hover:bg-emerald-100 border-2 border-slate-200 hover:border-emerald-400 p-4 rounded-2xl font-bold text-slate-700 text-sm transition">
+                    The Input (Darkness Sensor)
+                </button>
+                <button onclick="checkAct3('process')" class="bg-slate-100 hover:bg-amber-100 border-2 border-slate-200 hover:border-amber-400 p-4 rounded-2xl font-bold text-slate-700 text-sm transition">
+                    The Process (Computer Timer Chip)
+                </button>
+                <button onclick="checkAct3('output')" class="bg-slate-100 hover:bg-purple-100 border-2 border-slate-200 hover:border-purple-400 p-4 rounded-2xl font-bold text-slate-700 text-sm transition">
+                    The Output (Light Bulb)
+                </button>
+            </div>
+        </div>
+
+        <div id="fb-3" class="hidden text-sm p-4 rounded-2xl font-bold"></div>
+    </section>
+
+    <!-- ACTIVITY 4 -->
+    <section id="act-4" class="activity-card bg-white rounded-3xl p-6 card-shadow border-4 border-blue-100 space-y-6 hidden">
+        <div class="border-b-2 border-slate-100 pb-4">
+            <span class="text-xs font-extrabold text-blue-500 uppercase tracking-wider">Activity 4 of 6</span>
+            <h2 class="text-2xl font-bold text-slate-800">Click & Place System Sorting 📦</h2>
+            <p class="text-sm text-slate-600 mt-1">
+                Click an item below, then click the correct column to place it!
+            </p>
+        </div>
+
+        <!-- Chips bank -->
+        <div class="flex flex-wrap gap-2 min-h-[60px] p-3 bg-slate-100 rounded-2xl border-2 border-slate-200" id="chips-bank">
+            <div class="chip bg-white text-slate-800 border-2 border-slate-300 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold cursor-pointer" onclick="selectChip(this, 'Input')" data-id="1">👈 Touchscreen Tap</div>
+            <div class="chip bg-white text-slate-800 border-2 border-slate-300 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold cursor-pointer" onclick="selectChip(this, 'Input')" data-id="2">📷 Camera Lens</div>
+            <div class="chip bg-white text-slate-800 border-2 border-slate-300 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold cursor-pointer" onclick="selectChip(this, 'Process')" data-id="3">🧮 Calculating Game Score</div>
+            <div class="chip bg-white text-slate-800 border-2 border-slate-300 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold cursor-pointer" onclick="selectChip(this, 'Process')" data-id="4">💾 Saving High Score Rule</div>
+            <div class="chip bg-white text-slate-800 border-2 border-slate-300 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold cursor-pointer" onclick="selectChip(this, 'Output')" data-id="5">🔊 Sound from Speaker</div>
+            <div class="chip bg-white text-slate-800 border-2 border-slate-300 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold cursor-pointer" onclick="selectChip(this, 'Output')" data-id="6">💡 Flashlight Turning On</div>
+        </div>
+
+        <!-- Drop zones -->
+        <div class="grid md:grid-cols-3 gap-4">
+            <div class="drop-zone bg-emerald-50 p-4 rounded-2xl border-2 border-dashed border-emerald-400 min-h-[150px] space-y-2 cursor-pointer" onclick="placeChip('Input')">
+                <h3 class="font-bold text-sm text-emerald-800 uppercase">1. Inputs (Data In)</h3>
+                <div id="zone-Input" class="space-y-2"></div>
+            </div>
+
+            <div class="drop-zone bg-amber-50 p-4 rounded-2xl border-2 border-dashed border-amber-400 min-h-[150px] space-y-2 cursor-pointer" onclick="placeChip('Process')">
+                <h3 class="font-bold text-sm text-amber-800 uppercase">2. Processes (Thinking)</h3>
+                <div id="zone-Process" class="space-y-2"></div>
+            </div>
+
+            <div class="drop-zone bg-purple-50 p-4 rounded-2xl border-2 border-dashed border-purple-400 min-h-[150px] space-y-2 cursor-pointer" onclick="placeChip('Output')">
+                <h3 class="font-bold text-sm text-purple-800 uppercase">3. Outputs (Results)</h3>
+                <div id="zone-Output" class="space-y-2"></div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap justify-between items-center gap-3 pt-2">
+            <button onclick="resetAct4()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-5 py-3 rounded-2xl text-sm transition border-2 border-slate-300 flex items-center gap-2">
+                🔄 Start Over / Reset
+            </button>
+            <button onclick="checkAct4()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-2xl text-sm transition shadow-lg shadow-blue-200">
+                Check Sorted Parts 📦
+            </button>
+        </div>
+        <div id="fb-4" class="hidden text-sm p-4 rounded-2xl font-bold"></div>
+    </section>
+
+    <!-- ACTIVITY 5 -->
+    <section id="act-5" class="activity-card bg-white rounded-3xl p-6 card-shadow border-4 border-blue-100 space-y-6 hidden">
+        <div class="border-b-2 border-slate-100 pb-4">
+            <span class="text-xs font-extrabold text-blue-500 uppercase tracking-wider">Activity 5 of 6</span>
+            <h2 class="text-2xl font-bold text-slate-800">Build an Automatic Pet Feeder System 🐾</h2>
+            <p class="text-sm text-slate-600 mt-1">
+                Pick 1 Input, 1 Process, and 1 Output to build a working pet feeder!
+            </p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-4">
+            <div>
+                <label class="block text-xs font-bold text-emerald-700 uppercase mb-2">Input Sensor:</label>
+                <select id="a5-in" class="w-full bg-slate-50 border-2 border-emerald-300 rounded-xl p-2.5 text-sm font-bold text-slate-700 focus:outline-none">
+                    <option value="timer">Clock hits 5:00 PM</option>
+                    <option value="temp">Thermometer gets hot</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-amber-700 uppercase mb-2">Process Rule:</label>
+                <select id="a5-pr" class="w-full bg-slate-50 border-2 border-amber-300 rounded-xl p-2.5 text-sm font-bold text-slate-700 focus:outline-none">
+                    <option value="check_empty">Check if food bowl is empty</option>
+                    <option value="check_rain">Check if it is raining outside</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-purple-700 uppercase mb-2">Output Action:</label>
+                <select id="a5-out" class="w-full bg-slate-50 border-2 border-purple-300 rounded-xl p-2.5 text-sm font-bold text-slate-700 focus:outline-none">
+                    <option value="open_chute">Open food chute & pour kibble</option>
+                    <option value="turn_fan">Turn on cooling fan</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex justify-end pt-2">
+            <button onclick="checkAct5()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-2xl text-sm transition shadow-lg shadow-blue-200">
+                Test Pet Feeder 🐾
+            </button>
+        </div>
+        <div id="fb-5" class="hidden text-sm p-4 rounded-2xl font-bold"></div>
+    </section>
+
+    <!-- ACTIVITY 6 -->
+    <section id="act-6" class="activity-card bg-white rounded-3xl p-6 card-shadow border-4 border-blue-100 space-y-6 hidden">
+        <div class="border-b-2 border-slate-100 pb-4">
+            <span class="text-xs font-extrabold text-blue-500 uppercase tracking-wider">Activity 6 of 6</span>
+            <h2 class="text-2xl font-bold text-slate-800">Final System Explorer Quiz 🎯</h2>
+            <p class="text-sm text-slate-600 mt-1">
+                Answer these 3 quick questions to complete your lesson!
+            </p>
+        </div>
+
+        <div class="space-y-5">
+            <!-- Q1 -->
+            <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-200 space-y-2">
+                <p class="text-sm font-bold text-slate-800">1. What does a PROCESS do in a computer system?</p>
+                <div class="space-y-1.5 text-sm font-semibold text-slate-700">
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="a"> It displays pictures on the screen.</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="b" id="q1-correct"> It follows rules to change an Input into an Output.</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="c"> It presses the physical buttons for you.</label>
+                </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-200 space-y-2">
+                <p class="text-sm font-bold text-slate-800">2. Which item is an example of an INPUT?</p>
+                <div class="space-y-1.5 text-sm font-semibold text-slate-700">
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="a" id="q2-correct"> Typing on a computer keyboard</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="b"> Sound playing from headphones</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="c"> A printer printing paper</label>
+                </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-200 space-y-2">
+                <p class="text-sm font-bold text-slate-800">3. What happens if a system is missing its PROCESS part?</p>
+                <div class="space-y-1.5 text-sm font-semibold text-slate-700">
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="a"> It works even faster.</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="b" id="q3-correct"> The input cannot turn into the correct output.</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="c"> Nothing changes at all.</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end pt-2">
+            <button onclick="checkAct6()" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold px-6 py-3 rounded-2xl text-sm transition shadow-lg shadow-emerald-200">
+                Submit Quiz & Earn Badge 🏆
+            </button>
+        </div>
+        <div id="fb-6" class="hidden text-sm p-4 rounded-2xl font-bold"></div>
+    </section>
+</div>
+
+<script>
+    const completed = new Set();
+    let currentChip = null;
+
+    function switchTab(num) {
+        document.querySelectorAll('.activity-card').forEach(card => card.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('tab-active'));
+        
+        document.getElementById(`act-${num}`).classList.remove('hidden');
+        document.querySelectorAll('.tab-btn')[num - 1].classList.add('tab-active');
+    }
+
+    function markComplete(num) {
+        if (!completed.has(num)) {
+            completed.add(num);
+            updateProgressUI();
+
+            if (completed.size === 6 && typeof confetti === 'function') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+    }
+
+    function removeComplete(num) {
+        if (completed.has(num)) {
+            completed.delete(num);
+            updateProgressUI();
+        }
+    }
+
+    function updateProgressUI() {
+        const count = completed.size;
+        document.getElementById('badge-count').innerText = `🏆 Badges Earned: ${count} / 6`;
+        const pct = Math.round((count / 6) * 100);
+        document.getElementById('progress-percent').innerText = `${pct}% Complete`;
+        document.getElementById('progress-bar').style.width = `${pct}%`;
+    }
+
+    /* Act 1 Check */
+    function checkAct1() {
+        const i = document.getElementById('a1-in').value;
+        const p = document.getElementById('a1-pr').value;
+        const o = document.getElementById('a1-out').value;
+        const fb = document.getElementById('fb-1');
+
+        if (i === 'btn' && p === 'timer' && o === 'light') {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-emerald-100 border-2 border-emerald-300 text-emerald-800 block';
+            fb.innerHTML = '🎉 Perfect! The button is the Input, counting down is the Process, and the walk light is the Output!';
+            markComplete(1);
+        } else {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-amber-100 border-2 border-amber-300 text-amber-800 block';
+            fb.innerHTML = '🤔 Almost! Remember: Input is what YOU do first (button), Process is the circuit counting, and Output is the light changing!';
+        }
+    }
+
+    /* Act 2 Check */
+    function checkAct2() {
+        const a = document.getElementById('seq-step-a').value; // Button (Step 2)
+        const b = document.getElementById('seq-step-b').value; // Coin (Step 1)
+        const c = document.getElementById('seq-step-c').value; // Snack drops (Step 4)
+        const d = document.getElementById('seq-step-d').value; // Computer checks (Step 3)
+        const fb = document.getElementById('fb-2');
+
+        if (b === '1' && a === '2' && d === '3' && c === '4') {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-emerald-100 border-2 border-emerald-300 text-emerald-800 block';
+            fb.innerHTML = '🍿 You got it! Money -> Select Button -> System Checks Money -> Snack Drops!';
+            markComplete(2);
+        } else {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-amber-100 border-2 border-amber-300 text-amber-800 block';
+            fb.innerHTML = '🤔 Check your order again. What do you insert first before picking a snack?';
+        }
+    }
+
+    /* Act 3 Check */
+    function checkAct3(choice) {
+        const fb = document.getElementById('fb-3');
+        if (choice === 'process') {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-emerald-100 border-2 border-emerald-300 text-emerald-800 block';
+            fb.innerHTML = '🩺 Great job, Doctor! The timer chip (Process) was disconnected, so the light bulb never received the instruction!';
+            markComplete(3);
+        } else {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-amber-100 border-2 border-amber-300 text-amber-800 block';
+            fb.innerHTML = '🤔 Take another look! The sensor (Input) works, and the light bulb (Output) works. Which middle part had a disconnected wire?';
+        }
+    }
+
+    /* Act 4 Drag / Select logic */
+    function selectChip(el, targetCategory) {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('ring-4', 'ring-blue-400'));
+        currentChip = { element: el, category: targetCategory };
+        el.classList.add('ring-4', 'ring-blue-400');
+    }
+
+    function placeChip(zoneType) {
+        if (!currentChip) return;
+        document.getElementById(`zone-${zoneType}`).appendChild(currentChip.element);
+        currentChip.element.dataset.placedZone = zoneType;
+        currentChip.element.classList.remove('ring-4', 'ring-blue-400');
+        currentChip = null;
+    }
+
+    function checkAct4() {
+        const chips = document.querySelectorAll('#act-4 .chip');
+        let correct = 0;
+
+        chips.forEach(chip => {
+            if (chip.dataset.placedZone && chip.dataset.placedZone === chip.onclick.toString().match(/'([^']+)'/)[1]) {
+                correct++;
+            }
+        });
+
+        const fb = document.getElementById('fb-4');
+        if (correct === chips.length) {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-emerald-100 border-2 border-emerald-300 text-emerald-800 block';
+            fb.innerHTML = '📦 Fantastic sorting! All 6 items are in their correct category!';
+            markComplete(4);
+        } else {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-amber-100 border-2 border-amber-300 text-amber-800 block';
+            fb.innerHTML = `🤔 You have ${correct} of 6 sorted correctly. Try moving the rest into their proper boxes or click "Start Over"!`;
+        }
+    }
+
+    function resetAct4() {
+        const bank = document.getElementById('chips-bank');
+        const chips = document.querySelectorAll('#act-4 .chip');
+        
+        chips.forEach(chip => {
+            chip.classList.remove('ring-4', 'ring-blue-400');
+            delete chip.dataset.placedZone;
+            bank.appendChild(chip);
+        });
+
+        currentChip = null;
+
+        const fb = document.getElementById('fb-4');
+        fb.className = 'hidden text-sm p-4 rounded-2xl font-bold';
+        fb.innerHTML = '';
+
+        removeComplete(4);
+    }
+
+    /* Act 5 Check */
+    function checkAct5() {
+        const i = document.getElementById('a5-in').value;
+        const p = document.getElementById('a5-pr').value;
+        const o = document.getElementById('a5-out').value;
+        const fb = document.getElementById('fb-5');
+
+        if (i === 'timer' && p === 'check_empty' && o === 'open_chute') {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-emerald-100 border-2 border-emerald-300 text-emerald-800 block';
+            fb.innerHTML = '🐾 Success! Your automatic pet feeder serves kibble right on schedule!';
+            markComplete(5);
+        } else {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-amber-100 border-2 border-amber-300 text-amber-800 block';
+            fb.innerHTML = '🤔 Make sure your system parts match! (e.g. Clock hits 5 PM -> Check food bowl -> Pour kibble).';
+        }
+    }
+
+    /* Act 6 Check */
+    function checkAct6() {
+        const q1 = document.getElementById('q1-correct').checked;
+        const q2 = document.getElementById('q2-correct').checked;
+        const q3 = document.getElementById('q3-correct').checked;
+        const fb = document.getElementById('fb-6');
+
+        if (q1 && q2 && q3) {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-emerald-100 border-2 border-emerald-300 text-emerald-800 block';
+            fb.innerHTML = '🏆 100% Correct! You are an official System Explorer Master!';
+            markComplete(6);
+        } else {
+            fb.className = 'text-sm p-4 rounded-2xl font-bold bg-amber-100 border-2 border-amber-300 text-amber-800 block';
+            fb.innerHTML = '🤔 Review your quiz answers! Remember, inputs go in, processes calculate, and outputs come out!';
+        }
+    }
+</script>
+</body>
+</html>
